@@ -1,1 +1,0 @@
-Capeta Brazo Robótico
