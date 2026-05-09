@@ -1,10 +1,10 @@
-##Portafolio Proyectos – Iker
+Portafolio Proyectos – Iker
 
-#Sobre mí
+Sobre mí: 
 Soy estudiante de Ingeniería Mecatrónica con enfoque Automotriz en la universidad del Valle de México cursando cuarto semstre de carrera. Desarrollo proyectos prácticos usando Arduino/ESP32 integrando sensores, diseño de código y diseño de soluciones funcionales.
 
 
-#Proyectos:
+Proyectos:
 
 • Brazo robótico
     Sistema mecánico controlado mediante microcontrolador y servomotores.
