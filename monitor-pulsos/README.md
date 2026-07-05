@@ -1,172 +1,73 @@
-# Monitor de Pulsos con ESP32
+# Monitor de Pulso Cardíaco
 
-## Descripción
-Sistema de medición de frecuencia cardíaca en tiempo real utilizando un ESP32, un LED rojo y un fototransistor para detectar variaciones de flujo sanguíneo en el dedo.
+## Descripción del proyecto
+
+Este proyecto nació con el objetivo de desarrollar un monitor de pulso cardíaco desde cero, diseñando tanto la electrónica como el software necesario para adquirir y procesar la señal. Durante el desarrollo fabriqué diferentes prototipos, diseñé mis propias PCB y realicé varias iteraciones hasta obtener un sistema funcional capaz de medir la frecuencia cardíaca de manera confiable.
+
+Más que un proyecto de electrónica, este trabajo representó un proceso completo de diseño, prueba, análisis de errores y mejora continua.
 
 ---
 
-## Objetivo
-Desarrollar un monitor de ritmo cardíaco funcional, accesible y capaz de mostrar BPM en tiempo real mediante procesamiento de señal analógica.
+## Desarrollo del proyecto
+
+### Versión 1.0 – Primer prototipo
+
+La primera versión fue una prueba de concepto construida utilizando un LED y una fotoresistencia para detectar las variaciones de luz causadas por el flujo sanguíneo en el dedo.
+
+Aunque la idea parecía viable, esta versión no funcionó como esperaba. Durante las pruebas encontré que la señal obtenida tenía una gran cantidad de ruido, lo que dificultaba distinguir claramente los latidos cardíacos. Además, la fotoresistencia no era lo suficientemente rápida (trbaja a 10 milisegundos para ser exactos) para responder a los cambios de intensidad luminosa que requería la aplicación.
+
+A pesar de no obtener resultados satisfactorios, esta etapa fue fundamental para comprender las limitaciones del diseño y definir una mejor estrategia para la siguiente versión.
+
+### Versión 2.0 – Rediseño del sistema
+
+Gracias a los conocimientos cde la versión 1, realicé ajustes en el circuito para adaptarlo a una configuración más eficiente orientada a obtener las señales biomédicas.
+
+En esta versión, llevé a cabo además el diseño y la fabricación de la primera placa de circuito impreso (PCB) para el proyecto. Sin embargo, al momento de ensamblar y testear los componentes, surgieron diversas complicaciones que comprometieron el desempeño del sistema. Tales dificultades se debieron, en parte, a errores míos en el trazado de las conexiones durante la elaboración del esquema, aunado a criterios de diseño que resultaron en una gestión poco óptima de la superficie de la placa.
+
+Aunque esta versión supuso un avance considerable frente a la anterior, los fallos detectados me pusieron en la necesidad de someter el diseño a una revisión exhaustiva para poder encontrar mis errores y corregirlos en la siguiente versión.
+
+### Versión 3.0 – Diseño funcional final
+
+La versión 3.0 fue el resultado de todas las lecciones aprendidas durante el desarrollo del proyecto.
+
+En esta etapa corregí los errores eléctricos encontrados en la versión anterior, optimicé la distribución de componentes y rediseñé la PCB para aprovechar mejor el espacio disponible. Esto permitió reducir significativamente el tamaño de la tarjeta y obtener un diseño más limpio y profesional.
+
+El resultado fue un monitor de pulso cardíaco completamente funcional, capaz de medir la frecuencia cardíaca de forma estable y consistente. Para validar su desempeño, comparé las mediciones obtenidas con las de un oxímetro comercial, observando resultados muy similares en la función de monitoreo del ritmo cardíaco.
+
+### Versión 3.1 - Ajustes de LED y Fototransistor
+
+Para esta versión el cambio que se realizó fue que se dezplazó tanto el LED como el fotoransistor un poco más apartados del microcontrolador con el fin de poder diseñar el encapsulado donde se colocará el dedo y de esta forma el fototransistor pueda obtener una lectura correcta en el centro del dedo de la persona que este usando el dispositivo.
+
+---
+
+## Resultados obtenidos
+
+Al finalizar el proyecto logré desarrollar un sistema funcional que pasó de una idea inicial con múltiples limitaciones a un dispositivo capaz de medir el pulso cardíaco de manera confiable.
+
+Además del resultado final, este proyecto me permitió fortalecer habilidades en:
+
+- Diseño y análisis de circuitos electrónicos.
+- Acondicionamiento y procesamiento de señales.
+- Diseño, fabricación y depuración de PCB.
+- Programación de sistemas embebidos.
+- Resolución de problemas mediante iteraciones de ingeniería.
+
+Uno de los aspectos más valiosos de este desarrollo fue experimentar de primera mano cómo los errores encontrados en cada versión se transformaron en mejoras para la siguiente, hasta llegar a una solución funcional y validada.
 
 ---
 
 ## Tecnologías utilizadas
+
 - ESP32
-- Arduino IDE
-- MCP6002
-- Fototransistor
-- Señal analógica
-- Filtrado digital
-- Fusion 360
+- Diseño de PCB
+- Electrónica analógica
+- Procesamiento de señales
+- Sistemas embebidos
 
 ---
 
-## Funcionamiento del sistema
+## Futuras Mejoras
 
-El sistema funciona mediante un LED rojo que ilumina el dedo del usuario y un fototransistor que detecta cambios en la intensidad de luz reflejada.
+Como siguiente etapa del proyecto, planeo incorporar conectividad Wi-Fi utilizando el ESP32 para transmitir los datos en tiempo real y visualizarlos ya sea en un teléfono, tablet o hasta en una computadora. Mi objetivo es desarrollar una interfaz tipo HMI que permita visualizar las mediciones de manera remota, facilitando el monitoreo y análisis de la información obtenida por el dispositivo.
 
-Cuando el corazón bombea sangre, el volumen sanguíneo en el dedo aumenta ligeramente, provocando cambios en la luz recibida por el fototransistor. Estos cambios son convertidos en una señal de voltaje que posteriormente es procesada por el ESP32.
-
----
-
-## Desarrollo del hardware
-
-### Primer prototipo
-
-El primer prototipo fue construido utilizando:
-
-- LED rojo
-- Fotoresistencia
-- Resistencias
-- ESP32
-
-Aunque se lograba detectar una señal en condiciones de oscuridad, el sistema presentaba problemas debido a:
-
-- Alta sensibilidad a la luz ambiental
-- Baja velocidad de lectura
-- Detección duplicada de latidos
-
-### Cambio a fototransistor
-
-Después de analizar las limitaciones del sistema, la fotoresistencia fue reemplazada por un fototransistor, permitiendo:
-
-- Lecturas más rápidas
-- Mejor respuesta temporal
-- Una señal más estable
-
-### Amplificación de señal
-
-La señal obtenida seguía siendo demasiado pequeña, por lo que se implementó un amplificador operacional.
-
-Inicialmente se utilizó un LM358N, pero los resultados no fueron suficientemente limpios. Posteriormente se reemplazó por un MCP6002, obteniendo una señal considerablemente más estable y usable.
-
----
-
-## Procesamiento de señal y lógica del código
-
-La señal obtenida presenta una forma de onda donde cada latido genera un pico.
-
-Para detectar correctamente cada latido se implementaron distintas etapas de procesamiento.
-
-### Filtrado
-
-Se aplicó filtrado digital para:
-
-- Reducir ruido
-- Suavizar la señal
-- Eliminar variaciones pequeñas no deseadas
-
-### Umbral dinámico
-
-Se implementó un umbral dinámico que funciona como referencia para detectar cuándo ocurre un latido.
-
-El umbral debía adaptarse constantemente debido a:
-
-- Cambios de iluminación
-- Presión del dedo
-- Variaciones naturales de la señal
-
-### Offset
-
-Se agregó un parámetro de offset para ajustar qué tan alta debe ser la señal antes de considerarse un latido válido.
-
-### Tiempo muerto
-
-Para evitar detectar un mismo latido dos veces, se implementó un tiempo muerto de 400 ms después de cada detección.
-
-Cálculo realizado:
-
-- BPM máximo considerado: 150
-- 150 / 60 = 2.5 latidos por segundo
-- 1 / 2.5 = 0.4 segundos
-- Tiempo muerto = 400 ms
-
-Esto significa que el sistema ignora nuevas detecciones dentro de ese intervalo.
-
-### Cálculo de BPM
-
-El BPM se obtiene midiendo el tiempo entre picos consecutivos mediante la función `millis()` del ESP32.
-
-Fórmula utilizada:
-
-```text
-BPM = 60000 / intervalo
-```
-
-Donde:
-
-- `60000` representa los milisegundos de un minuto
-- `intervalo` representa el tiempo entre latidos consecutivos
-
-### Suavizado de BPM
-
-Para evitar fluctuaciones bruscas:
-
-- Se almacenan varios intervalos consecutivos
-- Se calcula un promedio
-- Posteriormente se aplica un filtro digital
-
-Esto permitió obtener lecturas más similares a las de un oxímetro comercial.
-
----
-
-## Diseño PCB y carcasa
-
-El circuito fue diseñado en Fusion 360 para desarrollar una PCB (Printed Circuit Board) y una carcasa personalizada para el dispositivo.
-
----
-
-## Retos y soluciones
-
-| Problema | Solución |
-|---|---|
-| Ruido en la señal | Filtrado digital |
-| Doble detección de latidos | Tiempo muerto |
-| Señal débil | Amplificador MCP6002 |
-| Variaciones por luz ambiente | Umbral dinámico |
-
----
-
-## Resultados
-
-Se logró desarrollar un prototipo funcional capaz de:
-
-- Detectar pulsos en tiempo real
-- Mostrar BPM mediante el monitor serial
-- Funcionar incluso con luz ambiental normal
-
-Las mediciones obtenidas presentaron resultados relativamente cercanos a los de un oxímetro comercial.
-
----
-
-## Galería
-
-- Fotos del prototipo
-- PCB
-- Diagramas del circuito
-
----
-
-## Autor
-
-Iker de la Parra
+Gracias a este proyecto pude ver como puedo pasar de una idea, a un prototipo y seguir mejorandola hasta llegar a resultados buenos donde pueda seguir expandiendo tantos mis conocimiento e ir creando metas con más enfoque y dificultad para lograr cosas asombrosas.
